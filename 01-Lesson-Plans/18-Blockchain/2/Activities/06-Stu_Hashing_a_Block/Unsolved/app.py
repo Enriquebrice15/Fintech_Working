@@ -10,6 +10,8 @@
 # 3. Use `st.write` to display the block's hash to the page.
 # 4. Test the application.
 ################################################################################
+from sqlite3 import Timestamp
+from tkinter import NW
 import streamlit as st
 from dataclasses import dataclass
 from typing import Any, List
@@ -38,33 +40,19 @@ class Block:
 
     # @TODO:
     # Add a new function called `hash_block`
-    # YOUR CODE HERE!
+    def hash_block(self):
+        sha = hashlib.sha256()
 
-    # @TODO:
-    # Add an instance of the `sha256` hashing function
-    # YOUR CODE HERE!
+        data = str(self.data).encode()
+        sha.update(data)
 
-    # @TODO:
-    # Encode the Block's data attribute
-    data =  # YOUR CODE HERE!
-    # Update the encoded data using the hashing function
-    # YOUR CODE HERE!
+        creator_id = str(self.creator_id).encode()
+        sha.update(creator_id)
 
-    # @TODO:
-    # Encode the Blocks's creator_id attribute
-    creator_id =  # YOUR CODE HERE!
-    # Update the encoded creator_id using the hashing function
-    # YOUR CODE HERE!
+        timestamp = str(self.timestamp).encode()
+        sha.update(timestamp)
 
-    # @TODO:
-    # Encode the Block's timestamp attribute
-    timestamp =  # YOUR CODE HERE!
-    # Update the encoded timestamp using the hashing function
-    # YOUR CODE HERE!
-
-    # @TODO:
-    # Return the hashes of all the Block class attributes
-    # YOUR CODE HERE!
+        return sha.hexdigest()
 
 
 ################################################################################
@@ -93,11 +81,11 @@ if st.button("Add Block"):
 
     # @TODO:
     # Call the `hash_block` function on the `new_block` to create a `block_hash`
-    block_hash =  # YOUR CODE HERE!
+    block_hash = new_block.hash_block()
 
     # @TODO:
     # Use `st.write` to display the `block_hash` to the page.
-    # YOUR CODE HERE!
+    st.write(block_hash)
 
 
 ################################################################################
